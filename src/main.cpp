@@ -15,16 +15,19 @@
 #define SPARKING 130
 #define NUM_COLORS 3
 
-const CRGBPalette16 palettes[] = { normal, green, blue };
 const CRGBPalette16 normal = CRGBPalette16(CRGB::Black, CRGB::Red, CRGB::Orange, CRGB::Yellow);
 const CRGBPalette16 green = CRGBPalette16(CRGB::Black, CRGB::Green, CRGB::Aqua,  CRGB::White);
 const CRGBPalette16 blue = CRGBPalette16(CRGB::Black, CRGB::Blue, CRGB::Aqua,  CRGB::White);
+const CRGBPalette16 palettes[] = { normal, green, blue };
 
 //  Don't touch
 CRGB leds[NUM_LEDS];
 bool btnPressed = false;
 int currentColor = 0;
 
+void onBtnPress();
+void btnRead();
+void fire();
 
 void setup() {
   delay(500);

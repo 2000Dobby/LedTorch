@@ -13,17 +13,20 @@
 
 #define COOLING 65
 #define SPARKING 130
-#define NUM_COLORS 3
+#define NUM_COLORS 4
 
 const CRGBPalette16 normal = CRGBPalette16(CRGB::Black, CRGB::Red, CRGB::Orange, CRGB::Yellow);
-const CRGBPalette16 green = CRGBPalette16(CRGB::Black, CRGB::Green, CRGB::Aqua,  CRGB::White);
+const CRGBPalette16 green = CRGBPalette16(CRGB::Black, CRGB::LimeGreen, CRGB::Green,  CRGB::ForestGreen);
 const CRGBPalette16 blue = CRGBPalette16(CRGB::Black, CRGB::Blue, CRGB::Aqua,  CRGB::White);
-const CRGBPalette16 palettes[] = { normal, green, blue };
+const CRGBPalette16 red = CRGBPalette16(CRGB::Black, CRGB::DarkRed, CRGB::Red, CRGB::DarkRed);
+const CRGBPalette16 palettes[] = { normal, green, blue, red };
 
 //  Don't touch
 CRGB leds[NUM_LEDS];
 bool btnPressed = false;
 int currentColor = 0;
+int btnTimeout = 25;
+int currentTimeout = 0;
 
 void onBtnPress();
 void btnRead();
@@ -40,7 +43,12 @@ void setup() {
 void loop() {
   random16_add_entropy(random());
 
-  btnRead();
+  if (currentTimeout == 0) {
+    btnRead();
+  } else {
+    currentTimeout--;
+  }
+  
   fire();
 
   FastLED.show();
@@ -55,7 +63,7 @@ void btnRead() {
     onBtnPress();
   } else if (readValue == LOW && btnPressed) {
     btnPressed = false;
-    delay(180);
+    currentTimeout = btnTimeout;
   }
 }
 

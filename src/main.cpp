@@ -34,6 +34,7 @@ void fire();
 
 void setup() {
   delay(500);
+  Serial.begin(9600);
   FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(BRIGHTNESS);
 
@@ -57,6 +58,7 @@ void loop() {
 
 void btnRead() {
   int readValue = digitalRead(BTN_PIN);
+  Serial.println(readValue);
 
   if (readValue == HIGH && !btnPressed) {
     btnPressed = true;
